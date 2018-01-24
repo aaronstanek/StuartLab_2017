@@ -2,14 +2,16 @@ from get_files_in_folder import *
 from read_json_ord_clump import *
 from integrate_json_ord_clump import *
 from generate_histogram import *
+from slice_data import *
 
-def histograms_from_folder(folder_path,what):
+def histograms_from_folder(folder_path,what,**options):
     # folderpath is a strings
     # what is a dict (integer->list(string))
     # it maps channel numbers to [title,x_label,y_label,bin_count,filename]
     # what dictates details of the plot to be generated for that channel
     # filename is the full path where the plot will be save (prefer ending in .png)
     # this function takes the data from a folder and plots it
+    # present options nonneg = True, cuts all negative data points
     file_list = get_files_in_folder(folder_path)
     t = 0.0
     event_list = []
@@ -25,6 +27,10 @@ def histograms_from_folder(folder_path,what):
         for f in integrated:
             u.append(f[plotnum])
         # u now has all the integration sums for the channel plotnum
+        # we might need to do some cuts
+        if "nonneg" in options:
+            if options["nonneg"]==True:
+                u = remove_below(u,0.0) # this remove all negative datapoints
         # now plot it
         generate_histogram(what[plotnum][0],what[plotnum][1],what[plotnum][2],what[plotnum][3],u,what[plotnum][4])
         # title, x_label, y_label, bin_count, input_data, filename
