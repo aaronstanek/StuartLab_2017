@@ -8,10 +8,10 @@ def read_json_ord_clump_basic(filename):
     infile = open(filename,"r")
     indata = infile.read()
     infile.close()
-    block = json.decodes(indata)
+    block = json.loads(indata)
     # the block is all the data in the file
     # we only want the time and the events
-    t = float(block["DISPLAY_TIMEDIVISION"])
+    t = float(block["OSC_META"]["DISPLAY_TIMEDIVISION"])
     # t is now the time between measurements, encoded as a float
     ev = block["EVENTS"]
     # ev is a list of events
