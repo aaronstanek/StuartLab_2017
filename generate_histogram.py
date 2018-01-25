@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 def generate_histogram(title,x_label,y_label,bin_count,input_data,filename):
     # string, string, string, int, list of floats, string
@@ -11,4 +12,23 @@ def generate_histogram(title,x_label,y_label,bin_count,input_data,filename):
     plt.ylabel(y_label)
     # now the plot is set up
     plt.hist(input_data,bins=bin_count)
+    plt.savefig(filename)
+
+def generate_bargraph(title,x_label,y_label,input_data,filename):
+    # string, string, string, list of dict(float->float), filename
+    # input_data maps x value to a y value
+    plt.close("all")
+    plt.figure(1)
+    plt.title(title)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    # now the plot is set up
+    objects = list(input_data)
+    objects.sort() # we want the stuff in order, otherwise it's hard to read
+    align = np.arange(len(objects)) # the horizontal positions of the bars
+    y_vals = []
+    for x in objects:
+        y_vals.append(input_data[x])
+    # y_vals now has the heights of the bars, in order
+    plt.bar(align, y_vals, align='center', width=1.0) # make the bars
     plt.savefig(filename)
