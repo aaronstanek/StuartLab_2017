@@ -4,6 +4,7 @@ from integrate_json_ord_clump import *
 from generate_histogram import *
 from slice_data import *
 from compute_run_duration import *
+from background_elimination import *
 
 def histograms_from_folder(folder_path,what,**options):
     # folderpath is a strings
