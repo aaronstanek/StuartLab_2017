@@ -19,6 +19,7 @@ def histograms_from_folder(folder_path,what,**options):
     for f in file_list:
         [ev,t] = read_json_ord_clump_basic(f) # you better hope that they all have the same delta t
         event_list = event_list + ev
+        del(ev)
     del(file_list) # just to be nice
     integrated = integrate_json_ord_clump(event_list,t)
     del(event_list)
@@ -46,6 +47,7 @@ def histograms_eliminating_background_by_time(data_folder_path,background_folder
         for f in file_list:
             [ev,t] = read_json_ord_clump_basic(f)
             event_list = event_list + ev
+            del(ev)
         j.append(integrate_json_ord_clump(event_list,t))
     del(file_list)
     del(event_list)
