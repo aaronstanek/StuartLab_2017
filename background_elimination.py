@@ -21,9 +21,9 @@ def background_elimination(full_data,full_duration,background_data,background_du
     # first is to decide the bounds and size of the bins
     # full_duration and background_duration are floats representing seconds
     # returns a dict(float->float), that maps energies to rates (hits per hour, accounting for background)
-    f_max = max(fulldata)
+    f_max = max(full_data)
     b_max = max(background_data)
-    f_min = min(fulldata)
+    f_min = min(full_data)
     b_min = min(background_data)
     if f_max>b_max:
         data_max = f_max
