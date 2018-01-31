@@ -31,4 +31,13 @@ def generate_bargraph(title,x_label,y_label,input_data,filename):
         y_vals.append(input_data[x])
     # y_vals now has the heights of the bars, in order
     plt.bar(align, y_vals, align='center', width=1.0) # make the bars
+    st_objects = []
+    for i in range(len(objects)):
+        if i==0:
+            st_objects.append(str(objects[0]))
+        elif i==len(objects)-1:
+            st_objects.append(str(objects[-1]))
+        else:
+            st_objects.append("")
+    plt.xticks(align, st_objects)
     plt.savefig(filename)
