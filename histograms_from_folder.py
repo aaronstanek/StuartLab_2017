@@ -3,6 +3,7 @@ from read_json_ord_clump import *
 from integrate_json_ord_clump import *
 from generate_histogram import *
 from slice_data import *
+from compute_run_duration import *
 
 def histograms_from_folder(folder_path,what,**options):
     # folderpath is a strings
@@ -34,3 +35,30 @@ def histograms_from_folder(folder_path,what,**options):
         # now plot it
         generate_histogram(what[plotnum][0],what[plotnum][1],what[plotnum][2],what[plotnum][3],u,what[plotnum][4])
         # title, x_label, y_label, bin_count, input_data, filename
+
+def histograms_eliminating_background_by_time(data_folder_path,background_folder_path,what,**options):
+    # see above for argument information
+    j = [] # j will be a list of lists of events
+    for x in [data_folder_path,background_folder_path]:
+        file_list = get_files_in_folder(x)
+        t = 0.0
+        event_list = []
+        for f in file_list:
+            [ev,t] = read_json_ord_clump_basic(f)
+            event_list = event_list + ev
+        j.append(integrate_json_ord_clump(event_list,t))
+    del(file_list)
+    del(event_list)
+    del(t)
+    dur = [] # this will hold run durations, floats
+    for x in j:
+        dur.append(compute_run_duration(x))
+    for plotnum in what:
+        u = [] # integration sums for data
+        v = [] # integration sums for background
+        for x in j[0]:
+            u.append(x[plotnum])
+        for x in j[1]:
+            v.append(x[plotnum])
+        be = background_elimination(u,dur[0],v,dur[1],what[plotnum][3]) # that last argument is the number of bins
+        generate_bargraph(what[plotnum][0],what[plotnum][1],what[plotnum][2],be,what[plotnum][4])
