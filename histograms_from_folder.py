@@ -40,6 +40,7 @@ def histograms_from_folder(folder_path,what,**options):
 def histograms_eliminating_background_by_time(data_folder_path,background_folder_path,what,**options):
     # see above for argument information
     j = [] # j will be a list of lists of events
+    dur = [] # this will hold run durations, floats
     for x in [data_folder_path,background_folder_path]:
         file_list = get_files_in_folder(x)
         t = 0.0
@@ -48,13 +49,11 @@ def histograms_eliminating_background_by_time(data_folder_path,background_folder
             [ev,t] = read_json_ord_clump_basic(f)
             event_list = event_list + ev
             del(ev)
+        dur.append(compute_run_duration(event_list))
         j.append(integrate_json_ord_clump(event_list,t))
     del(file_list)
     del(event_list)
     del(t)
-    dur = [] # this will hold run durations, floats
-    for x in j:
-        dur.append(compute_run_duration(x))
     for plotnum in what:
         u = [] # integration sums for data
         v = [] # integration sums for background
