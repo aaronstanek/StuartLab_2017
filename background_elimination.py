@@ -8,7 +8,7 @@ def data_to_bins(raw,data_min,bin_delta,bin_count):
     for i in range(bin_count):
         ou.append(0)
     for r in raw:
-        b = (r - data_min) / bin_delta
+        b = int((r - data_min) / bin_delta)
         if b>=bin_count: # the largest data point will be in a bin larger than what we can handle, so we move it one down
             b = bin_count-1
         ou[b] = ou[b] + 1 # this increments that bin
@@ -40,8 +40,8 @@ def background_elimination(full_data,full_duration,background_data,background_du
     # now data_max and data_min give us the bounds on the data
     bin_delta = (data_max-data_min) / float(bin_count)
     # bin_delta is now the width of each bin
-    full_bins = data_to_bins(full_data,bin_delta,bin_count)
-    background_bins = data_to_bins(background_data,bin_delta,bin_count)
+    full_bins = data_to_bins(full_data,data_min,bin_delta,bin_count)
+    background_bins = data_to_bins(background_data,data_min,bin_delta,bin_count)
     # now we need to correct for time
     # determine rate per hour
     for i in range(bin_count):
