@@ -40,6 +40,10 @@ def histograms_from_folder(folder_path,what,**options):
 
 def histograms_eliminating_background_by_time(data_folder_path,background_folder_path,what,**options):
     # see above for argument information
+    # determine elimination type
+    elim_type = "time"
+    if options["elim_type"] == "function":
+        elim_type = "function"
     j = [] # j will be a list of lists of events
     dur = [] # this will hold run durations, floats
     for x in [data_folder_path,background_folder_path]:
@@ -58,9 +62,20 @@ def histograms_eliminating_background_by_time(data_folder_path,background_folder
     for plotnum in what:
         u = [] # integration sums for data
         v = [] # integration sums for background
+        if "remove_below" in options:
+            u = remove_below(u,options["remove_below"])
+            v = remove_below(v,options["remove_below"])
+        if "remove_above" in options:
+            u = remove_above(u,options["remove_above"])
+            v = remove_above(v,options["remove_above"])
         for x in j[0]:
             u.append(x[plotnum])
         for x in j[1]:
             v.append(x[plotnum])
-        be = background_elimination(u,dur[0],v,dur[1],what[plotnum][3]) # that last argument is the number of bins
+        if elim_type=="time":
+            be = background_elimination(u,dur[0],v,dur[1],what[plotnum][3]) # that last argument is the number of bins
+        elif elim_type=="function":
+            [be,nope] = function_subtraction(u,v,what[plotnum][3])
+        else:
+            raise "Unknown elim_type"
         generate_bargraph(what[plotnum][0],what[plotnum][1],what[plotnum][2],be,what[plotnum][4])
