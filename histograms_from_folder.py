@@ -38,7 +38,7 @@ def histograms_from_folder(folder_path,what,**options):
         generate_histogram(what[plotnum][0],what[plotnum][1],what[plotnum][2],what[plotnum][3],u,what[plotnum][4])
         # title, x_label, y_label, bin_count, input_data, filename
 
-def histograms_eliminating_background_by_time(data_folder_path,background_folder_path,what,**options):
+def histograms_eliminating_background(data_folder_path,background_folder_path,what,**options):
     # see above for argument information
     # determine elimination type
     elim_type = "time"
