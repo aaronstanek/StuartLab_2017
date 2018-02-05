@@ -36,6 +36,8 @@ def generate_bargraph(title,x_label,y_label,input_data,filename):
     for i in range(len(objects)):
         if i==0:
             st_objects.append(nice_float_string(objects[0],3))
+        elif i==int(len(objects)/2):
+            st_objects.append(nice_float_string(objects[int(len(objects)/2)],3))
         elif i==len(objects)-1:
             st_objects.append(nice_float_string(objects[-1],3))
         else:

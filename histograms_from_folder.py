@@ -46,6 +46,7 @@ def histograms_eliminating_background(data_folder_path,background_folder_path,wh
         elim_type = "function"
     j = [] # j will be a list of lists of events
     dur = [] # this will hold run durations, floats
+    event_counts = []
     for x in [data_folder_path,background_folder_path]:
         file_list = get_files_in_folder(x)
         t = 0.0
@@ -56,6 +57,7 @@ def histograms_eliminating_background(data_folder_path,background_folder_path,wh
             del(ev)
         dur.append(compute_run_duration(event_list))
         j.append(integrate_json_ord_clump(event_list,t))
+        event_counts.append(len(event_list))
     del(file_list)
     del(event_list)
     del(t)
@@ -78,4 +80,11 @@ def histograms_eliminating_background(data_folder_path,background_folder_path,wh
             [be,nope] = function_subtraction(u,v,what[plotnum][3])
         else:
             raise "Unknown elim_type"
+        if "use_count" in options:
+            if options["use_count"]==True:
+                be_temp = be.items()
+                be = dict()
+                for x in be_temp:
+                    be[x[0]] = x[1]*event_counts[0] # multiply the portion by the number of events in the data run
+                del(be_temp)
         generate_bargraph(what[plotnum][0],what[plotnum][1],what[plotnum][2],be,what[plotnum][4])
