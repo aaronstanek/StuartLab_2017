@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from nice_float_string import *
 
 def generate_histogram(title,x_label,y_label,bin_count,input_data,filename):
     # string, string, string, int, list of floats, string
@@ -34,9 +35,9 @@ def generate_bargraph(title,x_label,y_label,input_data,filename):
     st_objects = []
     for i in range(len(objects)):
         if i==0:
-            st_objects.append(str(objects[0]))
+            st_objects.append(nice_float_string(objects[0],3))
         elif i==len(objects)-1:
-            st_objects.append(str(objects[-1]))
+            st_objects.append(nice_float_string(objects[-1],3))
         else:
             st_objects.append("")
     plt.xticks(align, st_objects)
