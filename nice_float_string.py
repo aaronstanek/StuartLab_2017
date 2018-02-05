@@ -7,6 +7,8 @@ def nice_float_string(n,s):
     # of that number, with the desired number of significant digits
     # note: this method truncates, it does not round
     m = int(math.log10(n)) # this gives the order of the most significant digit
+    if int(n/float(10**m))%10==0:
+        m -= 1
     y = [] # y is an array of chars, it holds the number we are going to output
     for i in range(s):
         div = float(10**(m-i))
