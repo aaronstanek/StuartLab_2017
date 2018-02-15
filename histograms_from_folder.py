@@ -34,6 +34,9 @@ def histograms_from_folder(folder_path,what,**options):
         if "nonneg" in options:
             if options["nonneg"]==True:
                 u = remove_below(u,0.0) # this remove all negative datapoints
+        if "energy_calibration" in options:
+            for i in range(len(u)):
+                u[i] = u[i]*options["energy_calibration"]
         # now plot it
         generate_histogram(what[plotnum][0],what[plotnum][1],what[plotnum][2],what[plotnum][3],u,what[plotnum][4])
         # title, x_label, y_label, bin_count, input_data, filename
@@ -87,4 +90,10 @@ def histograms_eliminating_background(data_folder_path,background_folder_path,wh
                 for x in be_temp:
                     be[x[0]] = x[1]*event_counts[0] # multiply the portion by the number of events in the data run
                 del(be_temp)
+        if "energy_calibration" in options:
+            be_temp = be.items()
+            be = dict()
+            for x in be_temp:
+                be[x[0]*options["energy_calibration"]] = x[1] # we change the key by some constant factor, can be used to calibrate energy levels
+            del(be_temp)
         generate_bargraph(what[plotnum][0],what[plotnum][1],what[plotnum][2],be,what[plotnum][4])
