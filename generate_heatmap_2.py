@@ -5,19 +5,19 @@ import numpy as np
 
 def get_min_max(datapoints):
     ou = dict()
-    ou["xmin"] = datapoints[0][1]
-    ou["xmax"] = datapoints[0][1]
-    ou["ymin"] = datapoints[0][0]
-    ou["ymax"] = datapoints[0][0]
+    ou["xmin"] = datapoints[0][0]
+    ou["xmax"] = datapoints[0][0]
+    ou["ymin"] = datapoints[0][1]
+    ou["ymax"] = datapoints[0][1]
     for p in datapoints:
-        if p[1]<ou["xmin"]:
-            ou["xmin"] = p[1]
-        elif p[1]>ou["xmax"]:
-            ou["xmax"] = p[1]
-        if p[0]<ou["ymin"]:
-            ou["ymin"] = p[0]
-        elif p[0]>ou["ymax"]:
-            ou["ymax"] = p[0]
+        if p[0]<ou["xmin"]:
+            ou["xmin"] = p[0]
+        elif p[0]>ou["xmax"]:
+            ou["xmax"] = p[0]
+        if p[1]<ou["ymin"]:
+            ou["ymin"] = p[1]
+        elif p[1]>ou["ymax"]:
+            ou["ymax"] = p[1]
     return ou
 
 def get_bin_width(bin_count,d_min,d_max):
@@ -43,11 +43,11 @@ def put_points_in_bins(datapoints,x_bin_count,y_bin_count,mm):
         del(k)
     # ou  now has the correct dimensions
     for p in datapoints:
-        sx = (p[1]-mm["xmin"]) / dx
+        sx = (p[0]-mm["xmin"]) / dx
         sx = int(sx)
         if sx>=x_bin_count:
             sx = x_bin_count-1
-        sy = (p[0]-mm["ymin"]) / dy
+        sy = (p[1]-mm["ymin"]) / dy
         sy = int(sy)
         if sy>=y_bin_count:
             sy = y_bin_count-1
