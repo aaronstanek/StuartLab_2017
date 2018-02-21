@@ -41,6 +41,12 @@ def heatmaps_from_folder(folder_path,what,**options):
                 u = remove_below_MD(u,options["remove_below_y"],1)
             if "remove_above_y" in options:
                 u = remove_above_MD(u,options["remove_above_y"],1)
+            if "energy_calibration_x" in options:
+                for i in range(len(u)):
+                    u[i][0] = u[i][0]*options["energy_calibration_x"]
+            if "energy_calibration_y" in options:
+                for i in range(len(u)):
+                    u[i][1] = u[i][1]*options["energy_calibration_y"]
             k = what[plotnum1][plotnum2]
             generate_heatmap(k[0],k[1],k[2],k[3],k[4],u,k[5])
             del(k)
