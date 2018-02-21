@@ -74,6 +74,7 @@ def generate_heatmap(title,x_label,y_label,x_bin_count,y_bin_count,datapoints,fi
     x, y = np.meshgrid(x, y)
     #convert intensity (list of lists) to a numpy array for plotting
     intensity = np.array(intensity)
+    intensity = intensity.transpose() # we need this because pyplot likes using [y,x] notation
     #now just plug the data into pcolormesh, it's that easy!
     plt.pcolormesh(x, y, intensity)
     plt.colorbar() #need a colorbar to show the intensity scale
