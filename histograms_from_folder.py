@@ -31,6 +31,10 @@ def histograms_from_folder(folder_path,what,**options):
             u.append(f[plotnum])
         # u now has all the integration sums for the channel plotnum
         # we might need to do some cuts
+        if "remove_below" in options:
+            u = remove_below(u,options["remove_below"])
+        if "remove_above" in options:
+            u = remove_above(u,options["remove_above"])
         if "nonneg" in options:
             if options["nonneg"]==True:
                 u = remove_below(u,0.0) # this remove all negative datapoints
