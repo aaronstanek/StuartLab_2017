@@ -31,6 +31,16 @@ def heatmaps_from_folder(folder_path,what,**options):
             u = []
             for f in integrated:
                 u.append([f[plotnum1],f[plotnum2]])
+            # u is now a list of all the datapoints that we care about
+            # we might want to do some cuts on this
+            if "remove_below_x" in options:
+                u = remove_below_MD(u,options["remove_below_x"],0)
+            if "remove_above_x" in options:
+                u = remove_above_MD(u,options["remove_above_x"],0)
+            if "remove_below_y" in options:
+                u = remove_below_MD(u,options["remove_below_y"],1)
+            if "remove_above_y" in options:
+                u = remove_above_MD(u,options["remove_above_y"],1)
             k = what[plotnum1][plotnum2]
             generate_heatmap(k[0],k[1],k[2],k[3],k[4],u,k[5])
             del(k)
