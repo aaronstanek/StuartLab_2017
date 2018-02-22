@@ -1,6 +1,9 @@
 # StuartLab_2017
-This is intended as a distillation and improvement to StuartLabOscilloscopeInterface2, StuartLabOrdFunctions, and StuartLabHistPlotLib
 
-This repository will not be able to do things that those other repositories can do.
-In fact, this repository will probably have less functionality overall.
-The principle advantage with this is that it will be more user friendly, better documented, and more modular.
+This software makes plots using data in the Oscilloscope Readout Data Format (.ord.json files)
+
+This software is capable of producing histograms showing the energy spectrum of the observed particles.
+For runs with data from multiple channels, it can generate 2D heatmaps which show the energy spectra and coincidence.
+And for both the 1D and 2D cases, it includes features for making cuts, calibrating energies and removing background events.
+
+For usage examples, please read example.py
