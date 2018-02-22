@@ -31,13 +31,13 @@ def histograms_from_folder(folder_path,what,**options):
             u.append(f[plotnum])
         # u now has all the integration sums for the channel plotnum
         # we might need to do some cuts
+        if "energy_calibration" in options:
+            for i in range(len(u)):
+                u[i] = u[i]*options["energy_calibration"]
         if "remove_below" in options:
             u = remove_below(u,options["remove_below"])
         if "remove_above" in options:
             u = remove_above(u,options["remove_above"])
-        if "energy_calibration" in options:
-            for i in range(len(u)):
-                u[i] = u[i]*options["energy_calibration"]
         # now plot it
         generate_histogram(what[plotnum][0],what[plotnum][1],what[plotnum][2],what[plotnum][3],u,what[plotnum][4])
         # title, x_label, y_label, bin_count, input_data, filename
@@ -72,6 +72,11 @@ def histograms_eliminating_background(data_folder_path,background_folder_path,wh
             u.append(x[plotnum])
         for x in j[1]:
             v.append(x[plotnum])
+        if "energy_calibration" in options:
+            for i in range(len(u)):
+                u[i] = u[i]*options["energy_calibration"]
+            for i in range(len(v)):
+                v[i] = v[i]*options["energy_calibration"]
         if "remove_below" in options:
             u = remove_below(u,options["remove_below"])
             v = remove_below(v,options["remove_below"])
@@ -91,10 +96,4 @@ def histograms_eliminating_background(data_folder_path,background_folder_path,wh
                 for x in be_temp:
                     be[x[0]] = x[1]*event_counts[0] # multiply the portion by the number of events in the data run
                 del(be_temp)
-        if "energy_calibration" in options:
-            be_temp = be.items()
-            be = dict()
-            for x in be_temp:
-                be[x[0]*options["energy_calibration"]] = x[1] # we change the key by some constant factor, can be used to calibrate energy levels
-            del(be_temp)
         generate_bargraph(what[plotnum][0],what[plotnum][1],what[plotnum][2],be,what[plotnum][4])
