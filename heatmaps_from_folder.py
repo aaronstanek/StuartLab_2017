@@ -91,7 +91,7 @@ def heatmaps_eliminating_background(data_folder_path,background_folder_path,what
             if "energy_calibration_y" in options:
                 for i in range(len(u)):
                     u[i][1] = u[i][1]*options["energy_calibration_y"]
-                for i in range(len(v))
+                for i in range(len(v)):
                     v[i][1] = v[i][1]*options["energy_calibration_y"]
             if "remove_below_x" in options:
                 u = remove_below_MD(u,options["remove_below_x"],0)
