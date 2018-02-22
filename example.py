@@ -99,3 +99,57 @@ histograms_eliminating_background(source_folder_path,background_folder_path,plot
 
 # beware, using the default background elimination method and use_count=True has undefined behavior
 histograms_eliminating_background(source_folder_path,background_folder_path,plot_info,use_count=True) # DO NOT USE THIS LINE
+
+# Section 4: Plotting in 2D
+
+from heatmaps_from_folder import heatmaps_from_folder
+
+plot_info = {
+            1:{
+                2:[title,x_label,y_label,x_bin_count,y_bin_count,filename],
+                4:[title,x_label,y_label,x_bin_count,y_bin_count,filename]
+                }
+            3:{
+                4:[title,x_label,y_label,x_bin_count,y_bin_count,filename]
+                }
+            }
+
+heatmaps_from_folder(folder_path,plot_info)
+
+# title, x_label, y_label, filename, and folder_path are strings and work identically to their counterparts in Section 1
+# x_bin_count and y_bin_count are integers and set the number of bins to use on the x and y axes respectively
+# you will notice the plot_info here has a different format than in the previous sections
+# this is because we need to mark two channels to be plotted and the order in which to plot them
+# earlier plot_info had the form dict(int->list)
+# now it has the form dict(int->dict(int->list))
+# the example above will make three plots
+# the first has channel 1 data on the x axis and channel 2 data on the second axis
+# the second has channel 1 data on the x axis and channel 4 data on the second axis
+# the third has channel 3 data on the x axis and channel 4 data on the second axis
+
+# an example might look like:
+
+plot_info = {
+            1:{
+                2:["Channel 1 and Channel 2","Channel 1 Energy","Channel 2 Energy",75,75,"~/Desktop/1-2.png"],
+                4:["Channel 1 and Channel 4","Channel 1 Energy","Channel 4 Energy",75,75,"~/Desktop/1-4.png"]
+                }
+            3:{
+                4:["Channel 3 and Channel 4","Channel 3 Energy","Channel 4 Energy",75,75,"~/Desktop/3-4.png"]
+                }
+            }
+
+heatmaps_from_folder("~/Desktop/my_data_folder",plot_info)
+
+# Options
+
+# remove_above_x
+# remove_below_x
+# remove_above_y
+# remove_below_y
+# energy_calibration_x
+# energy_calibration_y
+
+# see Section 2
+# those that end with _x modify the first channel provided
+# those that end with _y modify the second channel provided
