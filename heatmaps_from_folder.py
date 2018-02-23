@@ -4,7 +4,7 @@ from integrate_json_ord_clump import *
 from generate_heatmap_2 import *
 from slice_data import *
 from compute_run_duration import *
-from background_elimination import *
+from background_elimination_2D import *
 
 def heatmaps_from_folder(folder_path,what,**options):
     # folderpath is a strings
@@ -105,3 +105,12 @@ def heatmaps_eliminating_background(data_folder_path,background_folder_path,what
             if "remove_above_y" in options:
                 u = remove_above_MD(u,options["remove_above_y"],1)
                 v = remove_above_MD(v,options["remove_above_y"],1)
+            # now we start the fun stuff
+            if elim_type=="time":
+                be = time_elimination(u,dur[0],v,dur[1],what[plotnum1][plotnum2][3],what[plotnum1][plotnum2][4])
+            elif elim_type=="function":
+                [be,nope] = function_subtraction_2D(u,v,x_bin_count,y_bin_count)
+            else:
+                raise "Unknown elim_type"
+            pli = what[plotnum1][plotnum2]
+            generate_heatmap_auto(pli[0],pli[1],pli[2],be,pli[5])
