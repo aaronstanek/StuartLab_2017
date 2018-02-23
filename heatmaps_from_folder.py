@@ -112,5 +112,10 @@ def heatmaps_eliminating_background(data_folder_path,background_folder_path,what
                 [be,nope] = function_subtraction_2D(u,v,x_bin_count,y_bin_count)
             else:
                 raise "Unknown elim_type"
+            if "use_count" in options:
+                if options["use_count"]==True:
+                    for i in range(len(be["sub"])):
+                        for j in range(len(be["sub"][i])):
+                            be["sub"][i][j] = be["sub"][i][j] * event_counts[0]
             pli = what[plotnum1][plotnum2]
             generate_heatmap_auto(pli[0],pli[1],pli[2],be,pli[5])
