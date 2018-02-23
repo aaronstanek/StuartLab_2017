@@ -30,10 +30,20 @@ def time_elimination_multiply(data_matrix,duration):
         for j in range(len(data_matrix[i])):
             data_matrix[i][j] = data_matrix[i][j]*(3600.0/duration)
 
+def matrix_subtract(m1,m2):
+    ou = []
+    for i in range(len(m1)):
+        k = []
+        for j in range(len(m1[i])):
+            k.append(m1[i][j]-m2[i][j])
+        ou.append(k)
+    return ou
+
 def time_elimination(source_data,source_duration,background_data,background_duration,x_bin_count,y_bin_count):
     # incomplete, please fix
     grid = make_grid(source_data,background_data,x_bin_count,y_bin_count)
     time_elimination_multiply(grid["source"],source_duration)
     time_elimination_multiply(grid["back"],background_duration)
     # both the source data and background data are now time normalized
-    return grid
+    ou = matrix_subtract(grid["source"],grid["back"])
+    return ou
