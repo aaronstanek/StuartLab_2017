@@ -40,10 +40,47 @@ def matrix_subtract(m1,m2):
     return ou
 
 def time_elimination(source_data,source_duration,background_data,background_duration,x_bin_count,y_bin_count):
-    # incomplete, please fix
     grid = make_grid(source_data,background_data,x_bin_count,y_bin_count)
     time_elimination_multiply(grid["source"],source_duration)
     time_elimination_multiply(grid["back"],background_duration)
     # both the source data and background data are now time normalized
     grid["sub"] = matrix_subtract(grid["source"],grid["back"])
     return grid
+
+def function_subtraction_2D_normalize(matrix):
+    total = 0.0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            total += matrix[i][j]
+    # now we apply this transformation
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            matrix[i][j] = matrix[i][j] / total
+
+def function_subtraction_2D_squeeze(source,back):
+    squeeze_factor = 1.0
+    for i in range(len(source)):
+        for j in range(len(source[i])):
+            if source[i][j]!=0 and back[i][j]!=0:
+                y = back[i][j] / source[i][j]
+                if y > squeeze_factor:
+                    squeeze_factor = y
+    return squeeze_factor
+
+def function_subtraction_2D_subtract(source,back,squeeze_factor):
+    ou = []
+    for i in range(len(source)):
+        k = []
+        for j in range(len(source[i])):
+            k.append(source[i][j] - (back[i][j] / squeeze_factor))
+    return ou
+
+def function_subtraction_2D(source_data,background_data,x_bin_count,y_bin_count):
+    grid = make_grid(source_data,background_data,x_bin_count,y_bin_count)
+    function_subtraction_2D_normalize(grid["source"])
+    function_subtraction_2D_normalize(grid["back"])
+    # data is normalized to 1
+    squeeze_factor = function_subtraction_2D_squeeze(grid["source"],grid["back"])
+    grid["sub"] = function_subtraction_2D_subtract(grid["source"],grid["back"],squeeze_factor)
+    function_subtraction_2D_normalize(grid["sub"])
+    return [grid,False] # eventually replace second return value with number thing
