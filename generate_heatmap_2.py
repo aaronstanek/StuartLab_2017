@@ -79,3 +79,18 @@ def generate_heatmap(title,x_label,y_label,x_bin_count,y_bin_count,datapoints,fi
     plt.pcolormesh(x, y, intensity)
     plt.colorbar() #need a colorbar to show the intensity scale
     plt.savefig(filename)
+
+def generate_heatmap_auto(title,x_label,y_label,matrix_info,filename):
+    # matrix info is a dict with x y and sub as keys
+    # sub is a matrix with values
+    plt.close("all")
+    plt.figure(1)
+    plt.title(title)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    x, y = np.meshgrid(matrix_info["x"],matrix_info["y"])
+    intensity = np.array(matrix_info["sub"])
+    intensity = intensity.transpose()
+    plt.pcolormesh(x, y, intensity)
+    plt.colorbar()
+    plt.savefig(filename)
