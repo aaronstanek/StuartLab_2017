@@ -45,5 +45,5 @@ def time_elimination(source_data,source_duration,background_data,background_dura
     time_elimination_multiply(grid["source"],source_duration)
     time_elimination_multiply(grid["back"],background_duration)
     # both the source data and background data are now time normalized
-    ou = matrix_subtract(grid["source"],grid["back"])
-    return ou
+    grid["sub"] = matrix_subtract(grid["source"],grid["back"])
+    return grid
