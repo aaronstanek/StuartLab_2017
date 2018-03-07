@@ -153,3 +153,33 @@ heatmaps_from_folder("~/Desktop/my_data_folder",plot_info)
 # see Section 2
 # those that end with _x modify the first channel provided
 # those that end with _y modify the second channel provided
+
+# Section 5: Background Elimination in 2D
+
+from heatmaps_from_folder import heatmaps_eliminating_background
+
+plot_info = {
+            1:{
+                2:[title,x_label,y_label,x_bin_count,y_bin_count,filename],
+                4:[title,x_label,y_label,x_bin_count,y_bin_count,filename]
+                }
+            3:{
+                4:[title,x_label,y_label,x_bin_count,y_bin_count,filename]
+                }
+            }
+
+heatmaps_eliminating_background(source_folder_path,background_folder_path,plot_info)
+
+# Options
+
+# remove_above_x
+# remove_below_x
+# remove_above_y
+# remove_below_y
+# energy_calibration_x
+# energy_calibration_y
+# use_count (see Section 3)
+
+# see Section 2
+# those that end with _x modify the first channel provided
+# those that end with _y modify the second channel provided
