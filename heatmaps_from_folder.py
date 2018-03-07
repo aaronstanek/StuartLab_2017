@@ -52,7 +52,6 @@ def heatmaps_from_folder(folder_path,what,**options):
             del(k)
 
 def heatmaps_eliminating_background(data_folder_path,background_folder_path,what,**options):
-    # incomplete, please fix
     # see above for argument information
     # determine elimination type
     elim_type = "time"
